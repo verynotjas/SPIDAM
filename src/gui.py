@@ -110,7 +110,6 @@ wave_graph_button.place(x=900, y=500)
 alternate_plots_button = Button(root, text="Alternate plots")  # Add command=combine if needed
 alternate_plots_button.place(x=1000, y=500)
 
-
 # Combine plots button below Alternate plots buttons
 combine_plots_button = Button(root, text="Combine plots")  # Add command=alternate_plots for extra credit
 combine_plots_button.place(x=1000, y=550)
