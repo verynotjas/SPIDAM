@@ -1,5 +1,5 @@
-import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import *
+from tkinter import messagebox, filedialog
 
 import librosa
 import soundfile as sf
@@ -7,6 +7,7 @@ import os
 import numpy as np
 import wave
 
+from PIL._tkinter_finder import tk
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -58,15 +59,35 @@ def display_waveform(file_path):
         # Embed the plot into the tkinter window
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
-        canvas.get_tk_widget().pack(pady=20)
+        canvas.get_tk_widget().place(x = 500, y = 90)
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while plotting: {e}")
 # GUI Setup
-root = tk.Tk()
-root.geometry("800x700")
-root.title("Interactive Data Acoustic Modeling")
 
-load_button = tk.Button(root, text="Load Audio File", command=load_file)
-load_button.pack(pady=20)
 
+root = Tk()
+root.title("Sound Wave Analysis")
+root.geometry("1800x800")
+
+# Load file button
+load_file_button = Button(root, text="Load file", command = load_file)  # Add command=load if needed
+load_file_button.place(x=900, y=50)
+
+# Intensity graph, Wave graph, and Alternate plots buttons next to each other
+
+intensity_graph_button = Button(root, text="Intensity graph")
+intensity_graph_button.place(x=780, y=500)
+
+wave_graph_button = Button(root, text="Wave graph")
+wave_graph_button.place(x=900, y=500)
+
+alternate_plots_button = Button(root, text="Alternate plots")  # Add command=combine if needed
+alternate_plots_button.place(x=1000, y=500)
+
+
+# Combine plots button below Alternate plots buttons
+combine_plots_button = Button(root, text="Combine plots")  # Add command=alternate_plots for extra credit
+combine_plots_button.place(x=1000, y=550)
+
+# Run the main loop
 root.mainloop()
