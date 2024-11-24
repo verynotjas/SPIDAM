@@ -7,7 +7,6 @@ import os
 import numpy as np
 import wave
 
-# from PIL._tkinter_finder import tk
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -22,9 +21,12 @@ def load_file():
     Returns: None
     """
 
+    # Looks for file with audio file format
     file_path = filedialog.askopenfilename(filetypes=[("Audio Files", "*.wav;*.mp3;*.aac")])
+
     if file_path:
         try:
+            # Checks if file ends in .wav, if not, converts the file to .wav format
             if not file_path.endswith('.wav'):
                 new_file_path = convert_to_wav(file_path)
                 messagebox.showinfo("Successfully Converted", f"Converted file saved: {new_file_path}")
@@ -48,7 +50,9 @@ def convert_to_wav(file_path):
     y, sr = librosa.load(file_path, sr=None, mono=True)
     new_file_path = os.path.splitext(file_path)[0] + '.wav'
     sf.write(new_file_path, y, sr)
+
     print("File Converted Successfully!")
+
     return new_file_path
 
 def display_wave(file_path):
@@ -83,6 +87,7 @@ def display_wave(file_path):
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
         canvas.get_tk_widget().place(x = 500, y = 90)
+
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while plotting: {e}")
 
