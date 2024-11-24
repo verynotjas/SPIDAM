@@ -100,7 +100,7 @@ def set_gui(root):
     def display_RT60(file_path):
         pass
 
-    def combine_plots:
+    def combine_plots(file_path):
         pass
 
     # GUI load file button
