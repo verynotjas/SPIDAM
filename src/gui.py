@@ -94,15 +94,23 @@ def set_gui(root):
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred while plotting: {e}")
 
+    def display_intensity(file_path):
+        pass
+
+    def display_RT60(file_path):
+        pass
+
+    def combine_plots:
+        pass
 
     # GUI load file button
-    load_file_button = Button(root, text="Load file", command = load_file)  # Add command=load if needed
+    load_file_button = Button(root, text="Load file", command = load_file)  # Add command=load
     load_file_button.place(x=900, y=50)
 
     # Intensity graph, Wave graph, and Alternate plots buttons next to each other
 
     # Intensity graph button setup
-    intensity_graph_button = Button(root, text="Intensity graph")
+    intensity_graph_button = Button(root, text="Intensity graph", command = lambda: display_intensity)
     intensity_graph_button.place(x=780, y=500)
 
     # Wave graph button setup
@@ -110,11 +118,11 @@ def set_gui(root):
     wave_graph_button.place(x=900, y=500)
 
     # Alternate plot button set up
-    alternate_plots_button = Button(root, text="Alternate plots")  # Add command=combine if needed
+    alternate_plots_button = Button(root, text="Alternate plots", command = lambda: display_RT60)  # Add command=alternate_plots
     alternate_plots_button.place(x=1000, y=500)
 
     # Combine plots button below Alternate plots buttons
-    combine_plots_button = Button(root, text="Combine plots")  # Add command=alternate_plots for extra credit
+    combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots)  # Add command=combine for extra credit
     combine_plots_button.place(x=1000, y=550)
 
     return root
