@@ -45,9 +45,9 @@ def set_gui(root):
         """
         The purpose of this function is to convert an audio file into a .wav file
 
-        Parameters: File path (not in .wav format)
+        Parameters (str): File path (not in .wav format)
 
-        Returns: The new file path (in .wav format)
+        Returns (str): The new file path (in .wav format)
         """
 
         y, sr = librosa.load(file_path, sr=None, mono=True)
@@ -63,7 +63,7 @@ def set_gui(root):
         """
         The purpose of this function is to display the audio file into waveform in the GUI
 
-        Parameters: File path
+        Parameters (str): File path
 
         Returns: None
         """
