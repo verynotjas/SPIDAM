@@ -1,4 +1,4 @@
-# datavis.py
+# view.py
 # This file displays the plots
 
 import numpy as np

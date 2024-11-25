@@ -1,7 +1,7 @@
 # main.py
 
 import tkinter as tk
-from gui import set_gui
+from controller import set_gui
 
 def main():
     print("Begin Program...")

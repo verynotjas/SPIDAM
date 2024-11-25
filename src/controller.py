@@ -1,11 +1,11 @@
-# gui.py
+# controller.py
 
 from tkinter import *
 from tkinter import filedialog
 
 import soundfile as sf
 import os
-from datavis import *
+from view import *
 
 def set_gui(root):
 
