@@ -1,18 +1,16 @@
 # gui.py
 
 from tkinter import *
-from tkinter import messagebox, filedialog
+from tkinter import filedialog
 
-import librosa
 import soundfile as sf
 import os
-import numpy as np
-import wave
-
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from datavis import *
 
 def set_gui(root):
+
+    file_path = None
+
     def load_file():
 
         """
@@ -24,6 +22,9 @@ def set_gui(root):
         Returns: None
         """
 
+        # Takes the file_path variable from outside of the scope
+        nonlocal file_path
+
         # Looks for file with audio file format
         file_path = filedialog.askopenfilename(filetypes=[("Audio Files", "*.wav;*.mp3;*.aac")])
 
@@ -33,10 +34,8 @@ def set_gui(root):
                 if not file_path.endswith('.wav'):
                     new_file_path = convert_to_wav(file_path)
                     messagebox.showinfo("Successfully Converted", f"Converted file saved: {new_file_path}")
-                    display_wave(new_file_path)
                 else:
                     messagebox.showinfo("Alert!", "File is already in .wav format")
-                    display_wave(file_path)
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
 
@@ -58,51 +57,6 @@ def set_gui(root):
 
         return new_file_path
 
-    def display_wave(file_path):
-
-        """
-        The purpose of this function is to display the audio file into waveform in the GUI
-
-        Parameters (str): File path
-
-        Returns: None
-        """
-
-        try:
-            wav = wave.open(file_path, "r")
-            raw = wav.readframes(-1)
-            raw = np.frombuffer(raw, dtype="int16")
-
-            if wav.getnchannels() != 1:
-                messagebox.showerror("Error", "Please use a mono file.")
-                return
-
-            sample_rate = wav.getframerate()
-            time = np.linspace(0, len(raw) / sample_rate, num=len(raw))
-
-            fig = Figure(figsize=(8, 4), dpi=100)
-            ax = fig.add_subplot(111)
-            ax.plot(time, raw, color="blue")
-            ax.set_title("Waveform of Audio File")
-            ax.set_xlabel("Time (s)")
-            ax.set_ylabel("Amplitude")
-
-            canvas = FigureCanvasTkAgg(fig, master=root)
-            canvas.draw()
-            canvas.get_tk_widget().place(x = 500, y = 90)
-
-        except Exception as e:
-            messagebox.showerror("Error", f"An error occurred while plotting: {e}")
-
-    def display_intensity(file_path):
-        pass
-
-    def display_RT60(file_path):
-        pass
-
-    def combine_plots(file_path):
-        pass
-
     # GUI load file button
     load_file_button = Button(root, text="Load file", command = load_file)  # Add command=load
     load_file_button.place(x=900, y=50)
@@ -110,15 +64,15 @@ def set_gui(root):
     # Intensity graph, Wave graph, and Alternate plots buttons next to each other
 
     # Intensity graph button setup
-    intensity_graph_button = Button(root, text="Intensity graph", command = lambda: display_intensity)
+    intensity_graph_button = Button(root, text="Intensity graph", command = lambda: intensity_plot(file_path, root))
     intensity_graph_button.place(x=780, y=500)
 
     # Wave graph button setup
-    wave_graph_button = Button(root, text="Wave graph")
+    wave_graph_button = Button(root, text="Wave graph", command=lambda: base_plot(file_path, root))
     wave_graph_button.place(x=900, y=500)
 
     # Alternate plot button set up
-    alternate_plots_button = Button(root, text="Alternate plots", command = lambda: display_RT60)  # Add command=alternate_plots
+    alternate_plots_button = Button(root, text="Alternate plots", command = lambda: RT60_plot)  # Add command=alternate_plots
     alternate_plots_button.place(x=1000, y=500)
 
     # Combine plots button below Alternate plots buttons
