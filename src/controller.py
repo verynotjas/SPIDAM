@@ -2,10 +2,10 @@
 
 from tkinter import *
 from tkinter import filedialog
+from view import *
 
 import soundfile as sf
 import os
-from view import *
 
 def set_gui(root):
 
@@ -59,24 +59,26 @@ def set_gui(root):
 
     # GUI load file button
     load_file_button = Button(root, text="Load file", command = load_file)  # Add command=load
-    load_file_button.place(x=900, y=50)
+    load_file_button.place(x=700, y=50)
 
-    # Intensity graph, Wave graph, and Alternate plots buttons next to each other
+    """
+    Intensity graph, Wave graph, and Alternate plots buttons next to each other
+    """
 
     # Intensity graph button setup
     intensity_graph_button = Button(root, text="Intensity graph", command = lambda: intensity_plot(file_path, root))
-    intensity_graph_button.place(x=780, y=500)
+    intensity_graph_button.place(x=580, y=500)
 
     # Wave graph button setup
     wave_graph_button = Button(root, text="Wave graph", command=lambda: base_plot(file_path, root))
-    wave_graph_button.place(x=900, y=500)
+    wave_graph_button.place(x=700, y=500)
 
     # Alternate plot button set up
     alternate_plots_button = Button(root, text="Alternate plots", command = lambda: RT60_plot)  # Add command=alternate_plots
-    alternate_plots_button.place(x=1000, y=500)
+    alternate_plots_button.place(x=800, y=500)
 
     # Combine plots button below Alternate plots buttons
     combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots)  # Add command=combine for extra credit
-    combine_plots_button.place(x=1000, y=550)
+    combine_plots_button.place(x=800, y=550)
 
     return root
