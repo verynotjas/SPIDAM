@@ -36,7 +36,7 @@ def base_plot(file_path, root):
 
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
-        canvas.get_tk_widget().place(x=300, y=90)
+        canvas.get_tk_widget().place(x=330, y=90)
 
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while plotting: {e}")
@@ -64,7 +64,7 @@ def intensity_plot(file_path, root):
 
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
-        canvas.get_tk_widget().place(x=500, y=90)
+        canvas.get_tk_widget().place(x=330, y=90)
 
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while plotting intensity: {e}")

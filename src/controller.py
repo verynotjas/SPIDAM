@@ -11,6 +11,9 @@ def set_gui(root):
 
     file_path = None
 
+    file_name_label = Label(root, text = "No File", fg = "grey")
+    file_name_label.place(x = 400, y = 50)
+
     def load_file():
 
         """
@@ -22,7 +25,7 @@ def set_gui(root):
         Returns: None
         """
 
-        # Takes the file_path variable from outside of the scope
+        # Takes the file_path variable from outside the scope
         nonlocal file_path
 
         # Looks for file with audio file format
@@ -30,6 +33,7 @@ def set_gui(root):
 
         if file_path:
             try:
+                file_name_label.config(text = f"File: {os.path.basename(file_path)}", fg = "green")
                 # Checks if file ends in .wav, if not, converts the file to .wav format
                 if not file_path.endswith('.wav'):
                     new_file_path = convert_to_wav(file_path)
@@ -38,7 +42,12 @@ def set_gui(root):
                     messagebox.showinfo("Alert!", "File is already in .wav format")
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
-
+            except FileNotFoundError:
+                messagebox.showinfo("Alert!", "File not found. Please select file.")
+            except (ValueError, TypeError, RuntimeError) as e:
+                messagebox.showerror("Error", f"An error occurred: {e}")
+        else:
+            file_name_label.config(text = "No File", fg = "grey")
     def convert_to_wav(file_path):
 
         """
@@ -59,7 +68,7 @@ def set_gui(root):
 
     # GUI load file button
     load_file_button = Button(root, text="Load file", command = load_file)  # Add command=load
-    load_file_button.place(x=700, y=50)
+    load_file_button.place(x=330, y=50)
 
     """
     Intensity graph, Wave graph, and Alternate plots buttons next to each other
@@ -79,6 +88,6 @@ def set_gui(root):
 
     # Combine plots button below Alternate plots buttons
     combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots)  # Add command=combine for extra credit
-    combine_plots_button.place(x=800, y=550)
+    combine_plots_button.place(x=693, y=550)
 
     return root
