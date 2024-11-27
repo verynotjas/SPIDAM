@@ -13,7 +13,7 @@ def base_plot(file_path, root):
     """
     The purpose of this function is to display the audio file into waveform in the GUI
 
-    Parameters: (str) File path, (str) root
+    Parameters: (str) File path, (obj) root
 
     Returns: None
     """
@@ -45,7 +45,7 @@ def intensity_plot(file_path, root):
     """
     The purpose of this function is to plot the intensity plot of the sound file
 
-    Parameters: (str) File path, (str) root
+    Parameters: (str) File path, (obj) root
 
     Returns: None
     """
@@ -74,7 +74,7 @@ def RT60_plot(file_path, root):
     """
     The purpose of this function is to plot the RT60 plots of the sound file
 
-    Parameters: (str) File path, (str) root
+    Parameters: (str) File path, (obj) root
 
     Returns: None
     """
@@ -84,9 +84,9 @@ def RT60_plot(file_path, root):
 # Extra Credit
 def combine_plots(file_path, root):
     """
-    The purpose of this function is to combine all of the plots into one plot
+    The purpose of this function is to combine all the plots into one plot
 
-    Parameters: (str) File path, (str) root
+    Parameters: (str) File path, (obj) root
 
     Returns: None
     """

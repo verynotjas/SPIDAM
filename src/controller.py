@@ -55,12 +55,12 @@ def set_gui(root):
 
         Parameters (str): File path (not in .wav format)
 
-        Returns (str): The new file path (in .wav format)
+        Returns: (str) new_file_path
         """
 
-        y, sr = librosa.load(file_path, sr=None, mono=True)
+        y, sample_rate = librosa.load(file_path, sr=None, mono=True)
         new_file_path = os.path.splitext(file_path)[0] + '.wav'
-        sf.write(new_file_path, y, sr)
+        sf.write(new_file_path, y, sample_rate)
 
         print("File Converted Successfully!")
 
