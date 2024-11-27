@@ -3,8 +3,10 @@
 from tkinter import *
 from tkinter import filedialog
 from view import *
+from scipy.io import wavfile
 
 import soundfile as sf
+import tkinter as tk
 import os
 
 def set_gui(root):
@@ -13,6 +15,14 @@ def set_gui(root):
 
     file_name_label = Label(root, text = "No File", fg = "grey")
     file_name_label.place(x = 400, y = 50)
+
+
+    # Display duration and frequency
+    duration_label = Label(root, text="Duration: N/A")
+    duration_label.place(x=650, y=500)
+
+    frequency_label = Label(root, text="Peak Frequency: N/A")
+    frequency_label.place(x=650, y=550)
 
     def load_file():
 
@@ -40,6 +50,9 @@ def set_gui(root):
                     messagebox.showinfo("Successfully Converted", f"Converted file saved: {new_file_path}")
                 else:
                     messagebox.showinfo("Alert!", "File is already in .wav format")
+                # Update duration and frequency labels
+                update_duration(file_path)
+                update_max_frequency(file_path)
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
             except FileNotFoundError:
@@ -65,6 +78,22 @@ def set_gui(root):
         print("File Converted Successfully!")
 
         return new_file_path
+    def update_duration(file_path):
+        """
+        Updates the duration of the loaded .wav file.
+        """
+        sample_rate, data = wavfile.read(file_path)
+        duration = len(data) / sample_rate
+        duration_label.config(text=f"Duration: {duration:.2f} seconds")
+    def update_max_frequency(file_path):
+        """
+        Updates the peak frequency of the loaded .wav file.
+        """
+        sample_rate, data = wavfile.read(file_path)
+        fft_data = np.abs(np.fft.rfft(data))
+        freqs = np.fft.rfftfreq(len(data), 1 / sample_rate)
+        peak_freq = freqs[np.argmax(fft_data)]
+        frequency_label.config(text=f"Peak Frequency: {peak_freq:.2f} Hz")
 
     # GUI load file button
     load_file_button = Button(root, text="Load file", command = load_file)  # Add command=load
@@ -76,11 +105,11 @@ def set_gui(root):
 
     # Intensity graph button setup
     intensity_graph_button = Button(root, text="Intensity graph", command = lambda: intensity_plot(file_path, root))
-    intensity_graph_button.place(x=580, y=500)
+    intensity_graph_button.place(x=350, y=500)
 
     # Wave graph button setup
     wave_graph_button = Button(root, text="Wave graph", command=lambda: base_plot(file_path, root))
-    wave_graph_button.place(x=700, y=500)
+    wave_graph_button.place(x=500, y=500)
 
     # Alternate plot button set up
     alternate_plots_button = Button(root, text="Alternate plots", command = lambda: RT60_plot)  # Add command=alternate_plots
@@ -88,6 +117,6 @@ def set_gui(root):
 
     # Combine plots button below Alternate plots buttons
     combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots)  # Add command=combine for extra credit
-    combine_plots_button.place(x=693, y=550)
+    combine_plots_button.place(x=950, y=500)
 
     return root
