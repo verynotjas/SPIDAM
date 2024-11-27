@@ -51,7 +51,8 @@ def set_gui(root):
                 else:
                     messagebox.showinfo("Alert!", "File is already in .wav format")
                 # Update duration and frequency labels
-
+                update_duration(file_path)
+                update_max_frequency(file_path)
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
             except FileNotFoundError:
