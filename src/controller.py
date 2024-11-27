@@ -1,6 +1,7 @@
 # controller.py
 
 from tkinter import *
+import tkinter as tk
 from tkinter import filedialog
 from view import *
 
@@ -76,11 +77,11 @@ def set_gui(root):
 
     # Intensity graph button setup
     intensity_graph_button = Button(root, text="Intensity graph", command = lambda: intensity_plot(file_path, root))
-    intensity_graph_button.place(x=580, y=500)
+    intensity_graph_button.place(x=350, y=500)
 
     # Wave graph button setup
     wave_graph_button = Button(root, text="Wave graph", command=lambda: base_plot(file_path, root))
-    wave_graph_button.place(x=700, y=500)
+    wave_graph_button.place(x=500, y=500)
 
     # Alternate plot button set up
     alternate_plots_button = Button(root, text="Alternate plots", command = lambda: RT60_plot)  # Add command=alternate_plots
@@ -88,6 +89,13 @@ def set_gui(root):
 
     # Combine plots button below Alternate plots buttons
     combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots)  # Add command=combine for extra credit
-    combine_plots_button.place(x=693, y=550)
+    combine_plots_button.place(x=950, y=500)
+
+    # Display duration and frequency
+    duration_label = tk.Label(root, text="Duration: N/A")
+    duration_label.place(x = 650, y  = 500)
+
+    frequency_label = tk.Label(root, text="Peak Frequency: N/A")
+    frequency_label.place(x = 650, y = 550)
 
     return root
