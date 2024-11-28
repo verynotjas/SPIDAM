@@ -48,6 +48,7 @@ def set_gui(root):
                 if not file_path.endswith('.wav'):
                     new_file_path = convert_to_wav(file_path)
                     messagebox.showinfo("Successfully Converted", f"Converted file saved: {new_file_path}")
+                    file_path = new_file_path
                 else:
                     messagebox.showinfo("Alert!", "File is already in .wav format")
                 # Update duration and frequency labels
