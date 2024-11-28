@@ -19,10 +19,10 @@ def set_gui(root):
 
     # Display duration and frequency
     duration_label = Label(root, text="Duration: N/A")
-    duration_label.place(x=650, y=500)
+    duration_label.place(x=670, y=500)
 
     frequency_label = Label(root, text="Peak Frequency: N/A")
-    frequency_label.place(x=650, y=550)
+    frequency_label.place(x=670, y=550)
 
     def load_file():
 
@@ -105,7 +105,7 @@ def set_gui(root):
 
     # Intensity graph button setup
     intensity_graph_button = Button(root, text="Intensity graph", command = lambda: intensity_plot(file_path, root))
-    intensity_graph_button.place(x=350, y=500)
+    intensity_graph_button.place(x=330, y=500)
 
     # Wave graph button setup
     wave_graph_button = Button(root, text="Wave graph", command=lambda: base_plot(file_path, root))
@@ -113,10 +113,10 @@ def set_gui(root):
 
     # Alternate plot button set up
     alternate_plots_button = Button(root, text="Alternate plots", command = lambda: RT60_plot)  # Add command=alternate_plots
-    alternate_plots_button.place(x=800, y=500)
+    alternate_plots_button.place(x=870, y=500)
 
     # Combine plots button below Alternate plots buttons
     combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots)  # Add command=combine for extra credit
-    combine_plots_button.place(x=950, y=500)
+    combine_plots_button.place(x=1043, y=500)
 
     return root
