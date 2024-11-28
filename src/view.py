@@ -7,7 +7,6 @@ import soundfile as sf
 
 
 from tkinter import messagebox
-from tkinter import filedialog
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 

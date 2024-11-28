@@ -47,6 +47,7 @@ def set_gui(root):
                 # Checks if file ends in .wav, if not, converts the file to .wav format
                 if not file_path.endswith('.wav'):
                     new_file_path = convert_to_wav(file_path)
+                    file_path = new_file_path
                     messagebox.showinfo("Successfully Converted", f"Converted file saved: {new_file_path}")
                 else:
                     messagebox.showinfo("Alert!", "File is already in .wav format")
