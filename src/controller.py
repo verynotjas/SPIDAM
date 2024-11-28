@@ -112,11 +112,11 @@ def set_gui(root):
     wave_graph_button.place(x=500, y=500)
 
     # Alternate plot button set up
-    alternate_plots_button = Button(root, text="Alternate plots", command = lambda: RT60_plot)  # Add command=alternate_plots
+    alternate_plots_button = Button(root, text="Cycle RT60 Graphs", command = lambda: RT60_plot)  # Add command=alternate_plots
     alternate_plots_button.place(x=800, y=500)
 
     # Combine plots button below Alternate plots buttons
-    combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots)  # Add command=combine for extra credit
+    combine_plots_button = Button(root, text="Combine RT60 Graphs", command = lambda: combine_plots)  # Add command=combine for extra credit
     combine_plots_button.place(x=950, y=500)
 
     return root
