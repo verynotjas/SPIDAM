@@ -94,7 +94,6 @@ def set_gui(root):
         freqs = np.fft.rfftfreq(len(data), 1 / sample_rate)
         peak_freq = freqs[np.argmax(fft_data)]
         frequency_label.config(text=f"Peak Frequency: {peak_freq:.2f} Hz")
-
     # GUI load file button
     load_file_button = Button(root, text="Load file", command = load_file)  # Add command=load
     load_file_button.place(x=330, y=50)
