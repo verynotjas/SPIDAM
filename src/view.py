@@ -5,6 +5,7 @@ import librosa
 import librosa.display
 import soundfile as sf
 
+
 from tkinter import messagebox
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -22,9 +23,7 @@ def base_plot(file_path, root):
         y, sample_rate = sf.read(file_path)
 
         if len(y.shape) != 1:
-            messagebox.showerror("Error", "Please use a mono file.")
-            return
-
+            convert_to_mono(file_path)
         time = np.linspace(0, len(y) / sample_rate, num=len(y))
 
         fig = Figure(figsize=(8, 4), dpi=100)
@@ -80,6 +79,18 @@ def RT60_plot(file_path, root):
     """
 
     pass
+
+def convert_to_mono(file_path):
+
+    # Load audio file
+    y, sr = librosa.load(file_path, sr=None, mono=False)
+
+    # Convert to mono by averaging channels
+    if y.ndim > 1:
+        y_mono = y.mean(axis=0)
+    else:
+        y_mono = y
+
 
 # Extra Credit
 def combine_plots(file_path, root):
