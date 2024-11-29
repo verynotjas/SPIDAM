@@ -1,8 +1,7 @@
 # main.py
 
 import tkinter as tk
-from main import set_gui
-
+from controller import set_gui
 
 def main():
     print("Begin Program...")
@@ -14,7 +13,6 @@ def main():
 
     set_gui(root)
     root.mainloop()
-
 
 if __name__ == "__main__":
     main()

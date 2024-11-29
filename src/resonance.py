@@ -1,49 +1,41 @@
 import numpy as np
-import wave
-import scipy.io.wavfile as wav
+import matplotlib.pyplot as plt
+from scipy.io import wavfile
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
+# File upload functionality
+def upload_wav_file():
+    Tk().withdraw()  # Hide Tkinter root window
+    file_path = askopenfilename(filetypes=[("WAV files", "*.wav")])
+    return file_path
 
-def read_audio(file_path):
-    """
-    Reads a .wav audio file and converts it into an array.
+# Load the WAV file
+file_path = upload_wav_file()
+if not file_path:
+    print("No file selected. Exiting...")
+    exit()
 
-    Parameters:
-        file_path (str): Path to the audio file.
+sample_rate, data = wavfile.read(file_path)
+print(f"Loaded file: {file_path}")
 
-    Returns:
-        tuple: Sample rate (int) and audio data (np.ndarray).
-    """
-    # Read the audio file
-    sample_rate, audio_data = wav.read(file_path)
+# Generate time array for plotting
+if len(data.shape) == 2:  # Stereo audio
+    data = data[:, 0]  # Take only one channel
+time = np.linspace(0, len(data) / sample_rate, num=len(data))
 
-    # If stereo, take one channel
-    if audio_data.ndim > 1:
-        audio_data = audio_data[:, 0]
+# Plot the waveform
+plt.figure(figsize=(10, 6))  # Set figure size for better visibility
+plt.plot(time, data, color='blue', linewidth=1)
 
-    return sample_rate, audio_data
+# Add title and labels
+plt.title("Waveform Graph", fontsize=16)
+plt.xlabel("Time (s)", fontsize=14)
+plt.ylabel("Amplitude", fontsize=14)
 
+# Add grid for better visibility
+plt.grid()
 
-def compute_highest_resonance(audio_data):
-    """
-    Computes the highest resonance value (maximum amplitude) from audio data.
-
-    Parameters:
-        audio_data (np.ndarray): Audio data array.
-
-    Returns:
-        float: Maximum amplitude value in the audio data.
-    """
-    max_value = np.max(np.abs(audio_data))
-    return max_value
-
-
-if __name__ == "__main__":
-    # Input: Path to the audio file
-    file_path = input("Enter the path to your .wav audio file: ")
-
-    try:
-        sample_rate, audio_data = read_audio(file_path)
-        max_resonance = compute_highest_resonance(audio_data)
-        print(f"The highest resonance value (maximum amplitude) is: {max_resonance}")
-    except Exception as e:
-        print(f"Error: {e}")
+# Adjust layout and display the plot
+plt.tight_layout()  # Adjust layout to prevent overlap
+plt.show()
