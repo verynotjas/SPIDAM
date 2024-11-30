@@ -2,6 +2,9 @@
 
 from tkinter import *
 from tkinter import filedialog
+
+from matplotlib import pyplot as plt
+
 from view import *
 from scipy.io import wavfile
 
@@ -12,6 +15,7 @@ import os
 def set_gui(root):
 
     file_path = None
+    canvas = None
 
     file_name_label = Label(root, text = "No File", fg = "grey")
     file_name_label.place(x = 400, y = 50)
@@ -105,15 +109,15 @@ def set_gui(root):
     """
 
     # Intensity graph button setup
-    intensity_graph_button = Button(root, text="Intensity graph", command = lambda: intensity_plot(file_path, root))
+    intensity_graph_button = Button(root, text="Intensity graph", command = lambda: intensity_plot(file_path, root, canvas))
     intensity_graph_button.place(x=330, y=500)
 
     # Wave graph button setup
-    wave_graph_button = Button(root, text="Wave graph", command=lambda: base_plot(file_path, root))
+    wave_graph_button = Button(root, text="Wave graph", command=lambda: base_plot(file_path, root, canvas))
     wave_graph_button.place(x=500, y=500)
 
     # Alternate plot button set up
-    alternate_plots_button = Button(root, text="Alternate plots", command = lambda: RT60_plot)  # Add command=alternate_plots
+    alternate_plots_button = Button(root, text="Alternate plots", command = lambda: show_next_rt60(file_path, root, canvas))  # Add command=alternate_plots
     alternate_plots_button.place(x=870, y=500)
 
     # Combine plots button below Alternate plots buttons
@@ -121,3 +125,5 @@ def set_gui(root):
     combine_plots_button.place(x=1043, y=500)
 
     return root
+
+
