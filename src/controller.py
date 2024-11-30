@@ -121,8 +121,9 @@ def set_gui(root):
     alternate_plots_button.place(x=870, y=500)
 
     # Combine plots button below Alternate plots buttons
-    combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots)  # Add command=combine for extra credit
+    combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots(file_path, root, canvas))  # Add command=combine for extra credit
     combine_plots_button.place(x=1043, y=500)
+
 
     return root
 

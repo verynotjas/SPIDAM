@@ -252,3 +252,51 @@ def update_graph(rt60, trimmed_t, trimmed_db, title):
     plt.legend()
     plt.grid()
     plt.show()
+
+def combine_plots(file_path, root, canvas):
+    """
+    The purpose of this function is to combine all the RT60 plots into one plot.
+    It plots Low, Mid, and High frequency RT60s on a single figure.
+
+    Parameters: (str) File path, (obj) root
+
+    Returns: None
+    """
+
+    try:
+        clear_canvas(canvas)  # Clear existing plot
+        y, sample_rate = sf.read(file_path)
+        if len(y.shape) != 1:  # Convert to mono if stereo
+            y = np.mean(y, axis=1)
+
+        # Generate spectrogram
+        spectrum, freqs, t, _ = plt.specgram(y, Fs=sample_rate, NFFT=1024)
+
+        # Calculate RT60 for Low, Mid, and High frequency ranges
+        low_rt60, low_t, low_db = calculate_rt60(y, freqs, spectrum, t, (0, 250))
+        mid_rt60, mid_t, mid_db = calculate_rt60(y, freqs, spectrum, t, (250, 2000))
+        high_rt60, high_t, high_db = calculate_rt60(y, freqs, spectrum, t, (2000, 20000))
+
+        # Create the combined graph
+        fig = Figure(figsize=(8, 4), dpi=100)
+        ax = fig.add_subplot(111)
+
+        # Plot all the RT60 graphs in one plot
+        ax.plot(low_t, low_db, color="blue", label="Low (0-250 Hz)", alpha=0.7)
+        ax.plot(mid_t, mid_db, color="green", label="Mid (250-2000 Hz)", alpha=0.7)
+        ax.plot(high_t, high_db, color="red", label="High (2000-20000 Hz)", alpha=0.7)
+
+        # Add titles and labels
+        ax.set_title("Combined RT60 for Low, Mid, and High Frequencies", fontsize=16)
+        ax.set_xlabel("Time (s)", fontsize=14)
+        ax.set_ylabel("Power (dB)", fontsize=14)
+        ax.legend()
+        ax.grid()
+
+        # Update the canvas with the new plot
+        canvas = FigureCanvasTkAgg(fig, master=root)
+        canvas.draw()
+        canvas.get_tk_widget().place(x=330, y=90)
+
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while combining the plots: {e}")
