@@ -39,28 +39,11 @@ def calculate_rt60(data, freqs, spectrum, t, freq_range):
     rt20 = t[index_less_25] - t[index_less_5]
     rt60 = rt20 * 3
 
-    return rt60, data_in_db, index_of_max, index_less_5, index_less_25
+    # Trim data for plotting (start at -5 dB, end at -25 dB)
+    trimmed_t = t[index_less_5:index_less_25 + 1]
+    trimmed_db = data_in_db[index_less_5:index_less_25 + 1]
 
-
-# Function to update the graph
-def update_graph(freq_range, title):
-    rt60, data_in_db, index_of_max, index_less_5, index_less_25 = calculate_rt60(
-        data, freqs, spectrum, t, freq_range
-    )
-
-    ax.clear()
-    ax.plot(t, data_in_db, color="orange", label="Power (dB)")
-    ax.set_title(title, fontsize=16)
-    ax.set_xlabel("Time (s)", fontsize=14)
-    ax.set_ylabel("Power (dB)", fontsize=14)
-    ax.plot(t[index_of_max], data_in_db[index_of_max], "go", label="Max dB")
-    ax.plot(t[index_less_5], data_in_db[index_less_5], "yo", label="-5 dB")
-    ax.plot(t[index_less_25], data_in_db[index_less_25], "ro", label="-25 dB")
-    ax.legend()
-    ax.grid()
-    canvas.draw()
-
-    label_rt60.config(text=f"RT60: {round(rt60, 2)} seconds")
+    return rt60, trimmed_t, trimmed_db, index_less_5, index_less_25
 
 
 # Load the WAV file and calculate spectrogram
@@ -75,7 +58,12 @@ if len(data.shape) == 2:  # Stereo audio
 
 spectrum, freqs, t, im = plt.specgram(data, Fs=sample_rate, NFFT=1024, cmap="viridis")
 
-# Create Tkinter window
+# Pre-compute RT60 for Low, Mid, and High ranges
+low_rt60, low_t, low_db, _, _ = calculate_rt60(data, freqs, spectrum, t, (0, 250))
+mid_rt60, mid_t, mid_db, _, _ = calculate_rt60(data, freqs, spectrum, t, (250, 2000))
+high_rt60, high_t, high_db, _, _ = calculate_rt60(data, freqs, spectrum, t, (2000, 20000))
+
+# Tkinter GUI
 root = tk.Tk()
 root.title("RT60 Analysis")
 
@@ -85,24 +73,34 @@ canvas = FigureCanvasTkAgg(fig, master=root)
 canvas_widget = canvas.get_tk_widget()
 canvas_widget.pack()
 
-# Labels for RT60
-label_rt60 = tk.Label(root, text="RT60: -- seconds", font=("Arial", 14))
-label_rt60.pack()
+
+# Function to update the graph
+def update_graph(rt60, trimmed_t, trimmed_db, title):
+    ax.clear()
+    ax.plot(trimmed_t, trimmed_db, label="Power (dB)", color="orange")
+    ax.set_title(title, fontsize=16)
+    ax.set_xlabel("Time (s)", fontsize=14)
+    ax.set_ylabel("Power (dB)", fontsize=14)
+    ax.legend()
+    ax.grid()
+    canvas.draw()
+    rt60_label.config(text=f"RT60: {round(rt60, 2)} seconds")
 
 
-# Buttons to switch between Low, Mid, and High RT60
+# Button callback functions
 def show_low_rt60():
-    update_graph((0, 250), "Low RT60 Graph")
+    update_graph(low_rt60, low_t, low_db, "Low RT60 (0-250 Hz)")
 
 
 def show_mid_rt60():
-    update_graph((250, 2000), "Mid RT60 Graph")
+    update_graph(mid_rt60, mid_t, mid_db, "Mid RT60 (250-2000 Hz)")
 
 
 def show_high_rt60():
-    update_graph((2000, 20000), "High RT60 Graph")
+    update_graph(high_rt60, high_t, high_db, "High RT60 (2000-20000 Hz)")
 
 
+# Buttons to cycle through graphs
 button_low = tk.Button(root, text="Low RT60", command=show_low_rt60)
 button_low.pack(side=tk.LEFT, padx=5, pady=5)
 
@@ -112,8 +110,13 @@ button_mid.pack(side=tk.LEFT, padx=5, pady=5)
 button_high = tk.Button(root, text="High RT60", command=show_high_rt60)
 button_high.pack(side=tk.LEFT, padx=5, pady=5)
 
+# Label for RT60 value
+rt60_label = tk.Label(root, text="RT60: -- seconds", font=("Arial", 14))
+rt60_label.pack()
+
 # Start with Low RT60
 show_low_rt60()
 
-# Run the Tkinter loop
+# Start Tkinter main loop
 root.mainloop()
+
