@@ -15,6 +15,8 @@ def set_gui(root):
     file_path = None
     canvas = None
 
+    #Creating the labels and placing them
+
     file_name_label = Label(root, text = "No File", fg = "grey")
     file_name_label.place(x = 400, y = 50)
 
@@ -101,6 +103,7 @@ def set_gui(root):
         max_freq = calculate_max_frequency(file_path)
         frequency_label.config(text=f"Peak Frequency: {max_freq:.2f} Hz")
 
+    #Creating all the buttons and placing them
 
     # Load file button setup
     load_file_button = Button(root, text="Load file", command = load_file)  # Add command=load
