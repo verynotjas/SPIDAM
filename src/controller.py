@@ -33,6 +33,9 @@ def set_gui(root):
     frequency_label = Label(root, text="Peak Frequency: N/A")
     frequency_label.place(x=670, y=550)
 
+    difference_label = Label(root, text="Difference: N/A")
+    difference_label.place(x=670, y=600)
+
     def load_file():
 
         """
@@ -66,6 +69,7 @@ def set_gui(root):
 
                 update_duration(file_path)
                 update_max_frequency(file_path)
+
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
             except FileNotFoundError:
