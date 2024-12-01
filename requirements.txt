@@ -1,10 +1,10 @@
 ## requirements.txt
 
-numpy
-matplotlib
-librosa
-pysoundfile
-tkinter
-model
-os
-scipy
+## numpy
+## matplotlib
+## librosa
+## pysoundfile
+## tkinter
+## model
+## os
+## scipy
