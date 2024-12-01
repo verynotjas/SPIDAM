@@ -8,6 +8,7 @@ from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+
 def clear_canvas(canvas_widget):
     """
     This functions clears the last plot plotted
@@ -254,3 +255,23 @@ def combine_plots(file_path, root, canvas):
 
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while combining the plots: {e}")
+
+def difference_average(file_path):
+        # Read the audio file
+        y, sr = sf.read(file_path)
+        if len(y.shape) != 1:  # Convert to mono if stereo
+            y = np.mean(y, axis=1)
+
+        # Calculate the spectrogram
+        spectrum, freqs, t, _ = plt.specgram(y, Fs=sr, NFFT=1024)
+
+        # Calculate RT60 values for low, mid, and high frequency ranges
+        low_rt60, _, _ = calculate_rt60(y, freqs, spectrum, t, (0, 250))
+        mid_rt60, _, _ = calculate_rt60(y, freqs, spectrum, t, (250, 2000))
+        high_rt60, _, _ = calculate_rt60(y, freqs, spectrum, t, (2000, 20000))
+
+        low_average = abs(low_rt60 - 0.5)
+        mid_average = abs(mid_rt60 - 0.5)
+        high_average = abs(high_rt60 - 0.5)
+
+        return ((low_average + mid_average + high_average) / 3)

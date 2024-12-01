@@ -69,6 +69,7 @@ def set_gui(root):
 
                 update_duration(file_path)
                 update_max_frequency(file_path)
+                difference_label.config(text = f"Difference: {difference_average(file_path):.2f}")
 
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
