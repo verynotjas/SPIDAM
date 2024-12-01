@@ -90,20 +90,6 @@ def convert_to_mono(file_path):
     else:
         y_mono = y
 
-
-# Extra Credit
-def combine_plots(file_path, root):
-    """
-    The purpose of this function is to combine all the plots into one plot
-
-    Parameters: (str) File path, (obj) root
-
-    Returns: None
-    """
-
-    pass
-
-
 # Function to calculate RT60
 def calculate_rt60(data, freqs, spectrum, t, freq_range):
     # Select target frequencies within the given range
@@ -155,9 +141,9 @@ def show_low_rt60(file_path, root, canvas):
         fig = Figure(figsize=(8, 4), dpi=100)
         ax = fig.add_subplot(111)
         ax.plot(low_t, low_db, color="orange")
-        ax.set_title("Low RT60 (0-250 Hz)", fontsize=16)
-        ax.set_xlabel("Time (s)", fontsize=14)
-        ax.set_ylabel("Power (dB)", fontsize=14)
+        ax.set_title("Low RT60 (0-250 Hz)")
+        ax.set_xlabel("Time (s)")
+        ax.set_ylabel("Power (dB)")
         ax.grid()
 
         # Update the canvas with the new plot
@@ -186,9 +172,9 @@ def show_mid_rt60(file_path, root, canvas):
         fig = Figure(figsize=(8, 4), dpi=100)
         ax = fig.add_subplot(111)
         ax.plot(mid_t, mid_db, color="green")
-        ax.set_title("Mid RT60 (250-2000 Hz)", fontsize=16)
-        ax.set_xlabel("Time (s)", fontsize=14)
-        ax.set_ylabel("Power (dB)", fontsize=14)
+        ax.set_title("Mid RT60 (250-2000 Hz)")
+        ax.set_xlabel("Time (s)")
+        ax.set_ylabel("Power (dB)")
         ax.grid()
 
         # Add the plot to the Tkinter canvas
@@ -218,9 +204,9 @@ def show_high_rt60(file_path, root, canvas):
         fig = Figure(figsize=(8, 4), dpi=100)
         ax = fig.add_subplot(111)
         ax.plot(high_t, high_db, color="red")
-        ax.set_title("High RT60 (2000-20000 Hz)", fontsize=16)
-        ax.set_xlabel("Time (s)", fontsize=14)
-        ax.set_ylabel("Power (dB)", fontsize=14)
+        ax.set_title("High RT60 (2000-20000 Hz)")
+        ax.set_xlabel("Time (s)")
+        ax.set_ylabel("Power (dB)")
         ax.grid()
 
         # Add the plot to the Tkinter canvas
@@ -246,9 +232,9 @@ def show_next_rt60(file_path, root, canvas):
 def update_graph(rt60, trimmed_t, trimmed_db, title):
     plt.figure()
     plt.plot(trimmed_t, trimmed_db, label="Power (dB)", color="orange")
-    plt.title(title, fontsize=16)
-    plt.xlabel("Time (s)", fontsize=14)
-    plt.ylabel("Power (dB)", fontsize=14)
+    plt.title(title)
+    plt.xlabel("Time (s)")
+    plt.ylabel("Power (dB)")
     plt.legend()
     plt.grid()
     plt.show()
@@ -282,14 +268,14 @@ def combine_plots(file_path, root, canvas):
         ax = fig.add_subplot(111)
 
         # Plot all the RT60 graphs in one plot
-        ax.plot(low_t, low_db, color="blue", label="Low (0-250 Hz)", alpha=0.7)
+        ax.plot(low_t, low_db, color="orange", label="Low (0-250 Hz)", alpha=0.7)
         ax.plot(mid_t, mid_db, color="green", label="Mid (250-2000 Hz)", alpha=0.7)
         ax.plot(high_t, high_db, color="red", label="High (2000-20000 Hz)", alpha=0.7)
 
         # Add titles and labels
         ax.set_title("Combined RT60 for Low, Mid, and High Frequencies", fontsize=16)
-        ax.set_xlabel("Time (s)", fontsize=14)
-        ax.set_ylabel("Power (dB)", fontsize=14)
+        ax.set_xlabel("Time (s)")
+        ax.set_ylabel("Power (dB)")
         ax.legend()
         ax.grid()
 
