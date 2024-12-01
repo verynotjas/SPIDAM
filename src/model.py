@@ -4,33 +4,67 @@ import numpy as np
 import librosa
 import soundfile as sf
 import os
-import wave
-import contextlib
 
 from scipy.io import wavfile
+from tkinter import messagebox
 
 def remove_metadata(file_path):
     """
-    This function removes metadata from the audio file
+    This function checks for metadata in a WAV file, removes it if present,
+    and skips rewriting if no metadata is found.
 
     Parameters: (str) file_path
-    Returns: (str) new_file_path
+
+    Returns: (str) new_file_path, (str) file_path
     """
-
     try:
-        with contextlib.closing(wave.open(file_path, 'r')) as wav:
-            params = wav.getparams()
+        new_file_path = os.path.splitext(file_path)[0] + "_removed_metadata.wav"
+        meta_data = False
 
-        new_file_path = os.path.splitext(file_path)[0] + "_removed_meta.wav"
+        with open(file_path, 'rb') as original_file:
+            riff_header = original_file.read(12)
+            while True:
+                chunk_header = original_file.read(8)
+                if len(chunk_header) < 8:
+                    break
 
-        with contextlib.closing(wave.open(new_file_path, 'w')) as wav:
-            wav.setparams(params)
-            wav.writeframes(wav.readframes(wav.getnframes()))
+                chunk_id = chunk_header[:4]
+                chunk_size = int.from_bytes(chunk_header[4:], 'little')
 
+                if chunk_id not in (b'fmt ', b'data'):
+                    meta_data = True
+                    break
+
+                original_file.seek(chunk_size, 1)
+
+        if not meta_data:
+            messagebox.showinfo("Info", f"There is no metadata within this file: {file_path}, metadata cleaning process cancelled.")
+            return file_path
+
+        with open(file_path, 'rb') as original_file:
+            with open(new_file_path, 'wb') as new_file:
+                new_file.write(riff_header)
+
+                while True:
+                    chunk_header = original_file.read(8)
+                    if len(chunk_header) < 8:
+                        break
+
+                    chunk_id = chunk_header[:4]
+                    chunk_size = int.from_bytes(chunk_header[4:], 'little')
+                    chunk_data = original_file.read(chunk_size)
+
+                    if chunk_id in (b'fmt ', b'data'):
+                        new_file.write(chunk_header)
+                        new_file.write(chunk_data)
+                    else:
+                        print(f"Skipping metadata chunk: {chunk_id.decode(errors='ignore')}")
+
+        messagebox.showinfo("Success", f"Metadata removed. New file saved as {new_file_path}")
         return new_file_path
 
     except Exception as e:
-        print(f"Error removing metadata: {e}")
+        messagebox.showerror("Error", f"An error occurred while removing metadata: {e}")
         return file_path
 
 def convert_to_mono(file_path, ofp=None):
