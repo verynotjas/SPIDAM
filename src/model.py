@@ -38,7 +38,6 @@ def remove_metadata(file_path):
                 original_file.seek(chunk_size, 1)
 
         if not meta_data:
-            messagebox.showinfo("Info", f"There is no metadata within this file: {file_path}, metadata cleaning process cancelled.")
             return file_path
 
         with open(file_path, 'rb') as original_file:
