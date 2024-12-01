@@ -1,4 +1,4 @@
-# Audio Visualization and RT60 Analysis Tool
+## Audio Visualization and RT60 Analysis Tool
 
 ## Overview
 This project is a Python-based application designed to analyze and visualize audio files. It provides multiple features, including plotting waveforms, intensity, and calculating RT60 values for low, mid, and high-frequency bands. Users can view these through a graphical user interface created with Tkinter and Matplotlib.
