@@ -63,10 +63,8 @@ low_rt60, low_t, low_db = calculate_rt60(data, freqs, spectrum, t, (0, 250))
 mid_rt60, mid_t, mid_db = calculate_rt60(data, freqs, spectrum, t, (250, 2000))
 high_rt60, high_t, high_db = calculate_rt60(data, freqs, spectrum, t, (2000, 20000))
 
-# Calculate the average RT60 and difference from 0.5 seconds
-average_rt60 = (low_rt60 + mid_rt60 + high_rt60) / 3
-optimal_rt60 = 0.5  # Optimal RT60 value for intelligibility
-difference_rt60 = average_rt60 - optimal_rt60
+# Optimal RT60 for reference
+optimal_rt60 = 0.5  # 0.5 seconds for voice intelligibility
 
 # Tkinter GUI
 root = tk.Tk()
@@ -90,7 +88,7 @@ def update_graph(rt60, trimmed_t, trimmed_db, title):
     ax.grid()
     canvas.draw()
     rt60_label.config(text=f"RT60: {round(rt60, 2)} seconds")
-    difference_label.config(text=f"RT60 Difference: {round(rt60 - optimal_rt60, 2)} seconds")
+    difference_label.config(text=f"Difference: {round(rt60 - optimal_rt60, 2)} seconds")
 
 
 # Button callback functions
@@ -116,11 +114,11 @@ button_mid.pack(side=tk.LEFT, padx=5, pady=5)
 button_high = tk.Button(root, text="High RT60", command=show_high_rt60)
 button_high.pack(side=tk.LEFT, padx=5, pady=5)
 
-# Labels for RT60 values
+# Labels for RT60 value
 rt60_label = tk.Label(root, text="RT60: -- seconds", font=("Arial", 14))
 rt60_label.pack()
 
-difference_label = tk.Label(root, text=f"Average RT60 Difference: {round(difference_rt60, 2)} seconds", font=("Arial", 14))
+difference_label = tk.Label(root, text="Difference: -- seconds", font=("Arial", 14))
 difference_label.pack()
 
 # Start with Low RT60
@@ -128,3 +126,4 @@ show_low_rt60()
 
 # Start Tkinter main loop
 root.mainloop()
+
