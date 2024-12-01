@@ -62,7 +62,8 @@ def set_gui(root):
                 else:
                     messagebox.showinfo("Alert!", "File is already in .wav format")
 
-                # Update duration and frequency labels
+                file_path = remove_metadata(file_path)
+
                 update_duration(file_path)
                 update_max_frequency(file_path)
             except Exception as e:

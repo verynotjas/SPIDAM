@@ -4,8 +4,34 @@ import numpy as np
 import librosa
 import soundfile as sf
 import os
+import wave
+import contextlib
 
 from scipy.io import wavfile
+
+def remove_metadata(file_path):
+    """
+    This function removes metadata from the audio file
+
+    Parameters: (str) file_path
+    Returns: (str) new_file_path
+    """
+
+    try:
+        with contextlib.closing(wave.open(file_path, 'r')) as wav:
+            params = wav.getparams()
+
+        new_file_path = os.path.splitext(file_path)[0] + "_removed_meta.wav"
+
+        with contextlib.closing(wave.open(new_file_path, 'w')) as wav:
+            wav.setparams(params)
+            wav.writeframes(wav.readframes(wav.getnframes()))
+
+        return new_file_path
+
+    except Exception as e:
+        print(f"Error removing metadata: {e}")
+        return file_path
 
 def convert_to_mono(file_path, ofp=None):
     """
