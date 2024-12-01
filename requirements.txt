@@ -1,0 +1,7 @@
+## requirements.txt
+
+numpy
+matplotlib
+librosa
+pysoundfile
+tkinter
