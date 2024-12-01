@@ -109,7 +109,7 @@ def set_gui(root):
     wave_graph_button.place(x=500, y=500)
 
     # Alternate plot button set up
-    alternate_plots_button = Button(root, text="Alternate plots", command = lambda: show_next_rt60(file_path, root, canvas))  # Add command=alternate_plots
+    alternate_plots_button = Button(root, text="Alternate plots", command = lambda: alternate_rt60(file_path, root, canvas))  # Add command=alternate_plots
     alternate_plots_button.place(x=870, y=500)
 
     # Combine plots button below Alternate plots buttons

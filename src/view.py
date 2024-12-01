@@ -183,9 +183,9 @@ def plot_high_rt60(file_path, root, canvas):
 
 current_plot = {"index": 0}  # Track the current plot (0 = Low, 1 = Mid, 2 = High)
 
-def show_next_rt60(file_path, root, canvas):
+def alternate_rt60(file_path, root, canvas):
     """
-    This function rotates through RT60 plots
+    This function alternates through RT60 plots
 
     Parameters: (str) File path, (obj) root, canvas
     Returns: None

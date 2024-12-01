@@ -7,19 +7,25 @@ import os
 
 from scipy.io import wavfile
 
-def convert_to_mono(file_path):
+def convert_to_mono(file_path, ofp=None):
     """
     This function converts the input audio file into a mono file
 
     Parameters: (str) file_path
-    Returns: None
+    Returns: y_mono, (float) sr
     """
     y, sr = librosa.load(file_path, sr=None, mono=False)
 
     if y.ndim > 1:
-        y_mono = y.mean(axis=0)
+        y_mono = y.mean(axis=1)
     else:
         y_mono = y
+
+    if ofp:
+        sf.write(ofp, y_mono, sr)
+        return None
+    else:
+        return y_mono, sr
 
 def calculate_rt60(data, freqs, spectrum, t, freq_range):
     """
