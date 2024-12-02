@@ -5,6 +5,7 @@ import librosa
 import soundfile as sf
 import os
 
+from matplotlib import pyplot as plt
 from scipy.io import wavfile
 from tkinter import messagebox
 
@@ -166,3 +167,30 @@ def calculate_max_frequency(file_path):
     freqs = np.fft.rfftfreq(len(y), 1 / sr)
     max_freq = freqs[np.argmax(fft_data)]
     return max_freq
+
+def difference_average(file_path):
+
+    """
+    This function calculates the difference average bewteen RT60 values
+
+    Parameter: (str) file_path
+    Return: (float) difference_average
+    """
+    # Read the audio file
+    y, sr = sf.read(file_path)
+    if len(y.shape) != 1:  # Convert to mono if stereo
+        y = np.mean(y, axis=1)
+
+    # Calculate the spectrogram
+    spectrum, freqs, t, _ = plt.specgram(y, Fs=sr, NFFT=1024)
+
+    # Calculate RT60 values for low, mid, and high frequency ranges
+    low_rt60, _, _ = calculate_rt60(y, freqs, spectrum, t, (0, 250))
+    mid_rt60, _, _ = calculate_rt60(y, freqs, spectrum, t, (250, 2000))
+    high_rt60, _, _ = calculate_rt60(y, freqs, spectrum, t, (2000, 20000))
+
+    low_average = abs(low_rt60 - 0.5)
+    mid_average = abs(mid_rt60 - 0.5)
+    high_average = abs(high_rt60 - 0.5)
+
+    return (low_average + mid_average + high_average) / 3

@@ -30,13 +30,13 @@ def set_gui(root):
     canvas.get_tk_widget().place(x = 100, y = 90)
 
     # Display duration and frequency
-    duration_label = Label(root, text="Duration: N/A")
+    duration_label = Label(root, text="Duration: N/A seconds")
     duration_label.place(x=280, y=400)
 
-    frequency_label = Label(root, text="Peak Frequency: N/A")
+    frequency_label = Label(root, text="Peak Frequency: N/A Hz.")
     frequency_label.place(x=280, y=430)
 
-    rt60_difference_label = Label(root, text="RT60 Difference: N/A")
+    rt60_difference_label = Label(root, text="RT60 Difference: N/A seconds")
     rt60_difference_label.place(x=280, y=460)
 
     def load_file():
@@ -72,7 +72,7 @@ def set_gui(root):
 
                 update_duration(file_path)
                 update_max_frequency(file_path)
-                rt60_difference_label.config(text = f"RT60 Difference: {difference_average(file_path):.2f}")
+                rt60_difference_label.config(text = f"RT60 Difference: {difference_average(file_path):.2f} seconds")
 
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
@@ -102,7 +102,7 @@ def set_gui(root):
         Return: None
         """
         max_freq = calculate_max_frequency(file_path)
-        frequency_label.config(text=f"Peak Frequency: {max_freq:.2f} Hz")
+        frequency_label.config(text=f"Peak Frequency: {max_freq:.2f} Hz.")
 
     #Creating all the buttons and placing them
 
