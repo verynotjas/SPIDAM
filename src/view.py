@@ -37,7 +37,7 @@ def base_plot(file_path, root, canvas):
             convert_to_mono(file_path)
         time = np.linspace(0, len(y) / sr, num=len(y))
 
-        fig = Figure(figsize=(4, 2), dpi=100)
+        fig = Figure(figsize=(5, 3), dpi=100)
         ax = fig.add_subplot(111)
         ax.plot(time, y, color="blue")
         ax.set_title("Waveform of Audio File")
@@ -46,7 +46,9 @@ def base_plot(file_path, root, canvas):
 
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
-        canvas.get_tk_widget().place(x=165, y=90)
+        canvas.get_tk_widget().place(x = 100, y = 90)
+
+        fig.tight_layout()
 
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while plotting: {e}")
@@ -65,7 +67,7 @@ def intensity_plot(file_path, root, canvas):
         y, sr = librosa.load(file_path, sr=None)
         S = librosa.power_to_db(np.abs(librosa.stft(y)), ref=np.max)
 
-        fig = Figure(figsize=(4, 2), dpi=100)
+        fig = Figure(figsize=(5, 3), dpi=100)
         ax = fig.add_subplot(111)
         im = ax.imshow(S, aspect='auto', origin='lower', cmap='magma')
         fig.colorbar(im, ax=ax)
@@ -75,7 +77,9 @@ def intensity_plot(file_path, root, canvas):
 
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
-        canvas.get_tk_widget().place(x=165, y=90)
+        canvas.get_tk_widget().place(x = 100, y = 90)
+
+        fig.tight_layout()
 
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while plotting intensity: {e}")
@@ -98,7 +102,7 @@ def plot_low_rt60(file_path, root, canvas):
 
         low_rt60, low_t, low_db = calculate_rt60(y, freqs, spectrum, t, (0, 250))
 
-        fig = Figure(figsize=(4, 2), dpi=100)
+        fig = Figure(figsize=(5, 3), dpi=100)
         ax = fig.add_subplot(111)
         ax.plot(low_t, low_db, color="orange")
         ax.set_title("Low RT60 (0-250 Hz)")
@@ -108,7 +112,9 @@ def plot_low_rt60(file_path, root, canvas):
 
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
-        canvas.get_tk_widget().place(x=165, y=90)
+        canvas.get_tk_widget().place(x = 100, y = 90)
+
+        fig.tight_layout()
 
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while processing: {e}")
@@ -131,7 +137,7 @@ def plot_mid_rt60(file_path, root, canvas):
 
         mid_rt60, mid_t, mid_db = calculate_rt60(y, freqs, spectrum, t, (250, 2000))
 
-        fig = Figure(figsize=(4, 2), dpi=100)
+        fig = Figure(figsize=(5, 3), dpi=100)
         ax = fig.add_subplot(111)
         ax.plot(mid_t, mid_db, color="green")
         ax.set_title("Mid RT60 (250-2000 Hz)")
@@ -141,8 +147,9 @@ def plot_mid_rt60(file_path, root, canvas):
 
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
-        canvas.get_tk_widget().place(x=165, y=90)
+        canvas.get_tk_widget().place(x = 100, y = 90)
 
+        fig.tight_layout()
 
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while processing: {e}")
@@ -165,7 +172,7 @@ def plot_high_rt60(file_path, root, canvas):
 
         high_rt60, high_t, high_db = calculate_rt60(y, freqs, spectrum, t, (2000, 20000))
 
-        fig = Figure(figsize=(4, 2), dpi=100)
+        fig = Figure(figsize=(5, 3), dpi=100)
         ax = fig.add_subplot(111)
         ax.plot(high_t, high_db, color="red")
         ax.set_title("High RT60 (2000-20000 Hz)")
@@ -175,9 +182,9 @@ def plot_high_rt60(file_path, root, canvas):
 
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
-        canvas.get_tk_widget().place(x=165, y=90)
+        canvas.get_tk_widget().place(x = 100, y = 90)
 
-
+        fig.tight_layout()
 
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while processing: {e}")
@@ -236,7 +243,7 @@ def combine_plots(file_path, root, canvas):
         mid_rt60, mid_t, mid_db = calculate_rt60(y, freqs, spectrum, t, (250, 2000))
         high_rt60, high_t, high_db = calculate_rt60(y, freqs, spectrum, t, (2000, 20000))
 
-        fig = Figure(figsize=(4, 2), dpi=100)
+        fig = Figure(figsize=(5, 3), dpi=100)
         ax = fig.add_subplot(111)
 
         ax.plot(low_t, low_db, color="orange", label="Low (0-250 Hz)", alpha=0.7)
@@ -251,7 +258,9 @@ def combine_plots(file_path, root, canvas):
 
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
-        canvas.get_tk_widget().place(x=165, y=90)
+        canvas.get_tk_widget().place(x = 100, y = 90)
+
+        fig.tight_layout()
 
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while combining the plots: {e}")

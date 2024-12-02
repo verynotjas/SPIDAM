@@ -16,28 +16,28 @@ def set_gui(root):
     file_path = None
     canvas = None
 
-    #Creating the labels and placing them
+    # Creating the labels and placing them
 
     file_name_label = Label(root, text = "No File", fg = "grey")
-    file_name_label.place(x = 400, y = 50)
+    file_name_label.place(x = 160, y = 53)
 
-    fig = Figure(figsize=(4, 2), dpi = 100)
+    fig = Figure(figsize=(5, 3), dpi = 100)
     ax = fig.add_subplot(111)
 
     # Creates empty initial plot
     canvas = FigureCanvasTkAgg(fig, master = root)
     canvas.draw()
-    canvas.get_tk_widget().place(x = 165, y = 90)
+    canvas.get_tk_widget().place(x = 100, y = 90)
 
     # Display duration and frequency
     duration_label = Label(root, text="Duration: N/A")
-    duration_label.place(x=335, y=300)
+    duration_label.place(x=280, y=400)
 
     frequency_label = Label(root, text="Peak Frequency: N/A")
-    frequency_label.place(x=335, y=350)
+    frequency_label.place(x=280, y=430)
 
-    rt60_difference_label = Label(root, text=" RT60 Difference: N/A")
-    rt60_difference_label.place(x=335, y=400)
+    rt60_difference_label = Label(root, text="RT60 Difference: N/A")
+    rt60_difference_label.place(x=280, y=460)
 
     def load_file():
 
@@ -72,7 +72,7 @@ def set_gui(root):
 
                 update_duration(file_path)
                 update_max_frequency(file_path)
-                rt60_difference_label.config(text = f"Difference: {difference_average(file_path):.2f}")
+                rt60_difference_label.config(text = f"RT60 Difference: {difference_average(file_path):.2f}")
 
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
@@ -108,22 +108,22 @@ def set_gui(root):
 
     # Load file button setup
     load_file_button = Button(root, text="Load file", command = load_file)  # Add command=load
-    load_file_button.place(x=330, y=50)
+    load_file_button.place(x=100, y=50)
 
     # Intensity graph button setup
     intensity_graph_button = Button(root, text="Intensity graph", command = lambda: intensity_plot(file_path, root, canvas))
-    intensity_graph_button.place(x=150, y=350)
+    intensity_graph_button.place(x=100, y=400)
 
     # Wave graph button setup
     wave_graph_button = Button(root, text="Wave graph", command=lambda: base_plot(file_path, root, canvas))
-    wave_graph_button.place(x=250, y=350)
+    wave_graph_button.place(x=200, y=400)
 
     # Alternate plot button set up
     alternate_plots_button = Button(root, text="Alternate plots", command = lambda: alternate_rt60(file_path, root, canvas))  # Add command=alternate_plots
-    alternate_plots_button.place(x=475, y=350)
+    alternate_plots_button.place(x=412, y=400)
 
     # Combine plots button below Alternate plots buttons
     combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots(file_path, root, canvas))  # Add command=combine for extra credit
-    combine_plots_button.place(x=600, y=350)
+    combine_plots_button.place(x=512, y=400)
 
     return root
