@@ -10,7 +10,7 @@ def main():
     # GUI base setup
     root = tk.Tk()
     root.title("Sound Wave Analysis")
-    root.geometry("1400x800")
+    root.geometry("700x500")
 
     set_gui(root)
     root.mainloop()

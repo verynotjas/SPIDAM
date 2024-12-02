@@ -21,23 +21,23 @@ def set_gui(root):
     file_name_label = Label(root, text = "No File", fg = "grey")
     file_name_label.place(x = 400, y = 50)
 
-    fig = Figure(figsize=(8, 4), dpi = 100)
+    fig = Figure(figsize=(4, 2), dpi = 100)
     ax = fig.add_subplot(111)
 
     # Creates empty initial plot
     canvas = FigureCanvasTkAgg(fig, master = root)
     canvas.draw()
-    canvas.get_tk_widget().place(x = 330, y = 90)
+    canvas.get_tk_widget().place(x = 165, y = 90)
 
     # Display duration and frequency
     duration_label = Label(root, text="Duration: N/A")
-    duration_label.place(x=670, y=500)
+    duration_label.place(x=335, y=300)
 
     frequency_label = Label(root, text="Peak Frequency: N/A")
-    frequency_label.place(x=670, y=550)
+    frequency_label.place(x=335, y=350)
 
     difference_label = Label(root, text="Difference: N/A")
-    difference_label.place(x=670, y=600)
+    difference_label.place(x=335, y=400)
 
     def load_file():
 
@@ -112,18 +112,18 @@ def set_gui(root):
 
     # Intensity graph button setup
     intensity_graph_button = Button(root, text="Intensity graph", command = lambda: intensity_plot(file_path, root, canvas))
-    intensity_graph_button.place(x=330, y=500)
+    intensity_graph_button.place(x=150, y=350)
 
     # Wave graph button setup
     wave_graph_button = Button(root, text="Wave graph", command=lambda: base_plot(file_path, root, canvas))
-    wave_graph_button.place(x=500, y=500)
+    wave_graph_button.place(x=250, y=350)
 
     # Alternate plot button set up
     alternate_plots_button = Button(root, text="Alternate plots", command = lambda: alternate_rt60(file_path, root, canvas))  # Add command=alternate_plots
-    alternate_plots_button.place(x=870, y=500)
+    alternate_plots_button.place(x=475, y=350)
 
     # Combine plots button below Alternate plots buttons
     combine_plots_button = Button(root, text="Combine plots", command = lambda: combine_plots(file_path, root, canvas))  # Add command=combine for extra credit
-    combine_plots_button.place(x=1043, y=500)
+    combine_plots_button.place(x=600, y=350)
 
     return root
