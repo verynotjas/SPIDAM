@@ -3,6 +3,7 @@
 import tkinter as tk
 from controller import set_gui
 
+
 def main():
     print("Begin Program...")
 

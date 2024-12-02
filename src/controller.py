@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import filedialog
 from view import *
 
+
 def set_gui(root):
     """
     The purpose of this function is to set up the GUI

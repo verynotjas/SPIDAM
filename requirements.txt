@@ -1,10 +1,9 @@
 ## requirements.txt
 
-## numpy
-## matplotlib
-## librosa
-## pysoundfile
+## numpy 2.02
+## matplotlib 3.9.3
+## librosa 0.10.2
+## soundfile 0.12.1
 ## tkinter
-## model
 ## os
-## scipy
+## scipy 1.14.1
